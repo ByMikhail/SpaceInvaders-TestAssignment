@@ -8,7 +8,7 @@ namespace SpaceInvaders.Gameplay.Units
 {
     public class Spaceship : GameplayUnit, IKillable
     {
-        [SerializeField] private float _speed = 2;
+        [SerializeField] private float _speed;
         [SerializeField] private Transform _projectileSpawnPoint;
         [SerializeField] private ProjectileFactoryBase _projectileFactory;
 

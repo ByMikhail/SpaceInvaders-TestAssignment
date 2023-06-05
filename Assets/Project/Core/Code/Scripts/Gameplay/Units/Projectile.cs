@@ -1,5 +1,6 @@
 ﻿using SpaceInvaders.Foundation.TinyGameplayFramework;
 using SpaceInvaders.Gameplay.Units.AbilityInterfaces;
+using SpaceInvaders.Tools.Extensions;
 using UnityEngine;
 
 namespace SpaceInvaders.Gameplay.Units
@@ -7,10 +8,10 @@ namespace SpaceInvaders.Gameplay.Units
     public class Projectile : GameplayUnit
     {
         [SerializeField] private float _movementSpeed;
-        [SerializeField] private string _absorberTag;
 
-        private Transform _transform;
         private string _ignoreTag;
+        private Transform _transform;
+        private Renderer[] _renderers;
 
         public void Init(string ignoreTag)
         {
@@ -22,6 +23,16 @@ namespace SpaceInvaders.Gameplay.Units
         private void Awake()
         {
             _transform = transform;
+            _renderers = GetComponentsInChildren<Renderer>();
+        }
+
+
+        private void Update()
+        {
+            if (_renderers.EveryoneIsInvisible())
+            {
+                DestroyItself();
+            }
         }
 
         private void FixedUpdate()
@@ -38,10 +49,6 @@ namespace SpaceInvaders.Gameplay.Units
             if (killableEntity != null)
             {
                 killableEntity.Kill();
-                DestroyItself();
-            }
-            else if (otherCollider.gameObject.CompareTag(_absorberTag))
-            {
                 DestroyItself();
             }
         }
