@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2e481136a834c5ca27f0086d8da7589, type: 3}
+  m_Name: InvaderProjectileFactory
+  m_EditorClassIdentifier: 
+  _projectilePrefabs:
+  - {fileID: 8276677665757927144, guid: fb5823ed2e2df3a408a9404def0e72c0, type: 3}
+  - {fileID: 8276677665757927144, guid: d2e531677ff4a2a449c195cf9f501c2c, type: 3}
