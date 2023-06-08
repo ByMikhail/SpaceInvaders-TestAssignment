@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace SpaceInvaders.Gameplay.Units
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class Spaceship : GameplayUnit, IKillable
     {
         [SerializeField] private float _speed;
@@ -14,14 +15,14 @@ namespace SpaceInvaders.Gameplay.Units
 
         public event EventHandler OnKilled;
 
-        private Transform _transform;
+        private Rigidbody2D _rigidbody;
         private Projectile _lastFiredProjectile;
 
         #region Unity lifecycle
 
         private void Awake()
         {
-            _transform = transform;
+            _rigidbody = GetComponent<Rigidbody2D>();
         }
 
         private void OnDestroy()
@@ -33,9 +34,10 @@ namespace SpaceInvaders.Gameplay.Units
 
         #region Interface methods
 
-        public void Move(Vector3 direction)
+        public void Move(Vector2 direction)
         {
-            _transform.Translate(direction.normalized * (_speed * Time.fixedDeltaTime));
+            var newPosition = _rigidbody.position + direction.normalized * (_speed * Time.fixedDeltaTime);
+            _rigidbody.MovePosition(newPosition);
         }
 
         public void Fire()
