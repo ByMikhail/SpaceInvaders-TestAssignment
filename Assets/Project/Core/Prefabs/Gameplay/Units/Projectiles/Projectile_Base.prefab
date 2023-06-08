@@ -69,7 +69,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movementSpeed: 8
-  _absorberTag: AbsorberBoundary
 --- !u!1 &645588204274106290
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,7 +144,7 @@ GameObject:
   - component: {fileID: 645588205073011334}
   - component: {fileID: 1802320877272515635}
   m_Layer: 0
-  m_Name: Base
+  m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
