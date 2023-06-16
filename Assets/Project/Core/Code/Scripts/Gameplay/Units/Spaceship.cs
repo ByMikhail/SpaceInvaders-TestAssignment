@@ -13,6 +13,8 @@ namespace SpaceInvaders.Gameplay.Units
         [SerializeField] private Transform _projectileSpawnPoint;
         [SerializeField] private ProjectileFactoryBase _projectileFactory;
 
+        public bool IsKilled { get; private set; }
+
         public event EventHandler OnKilled;
 
         private Rigidbody2D _rigidbody;
@@ -25,7 +27,8 @@ namespace SpaceInvaders.Gameplay.Units
             _rigidbody = GetComponent<Rigidbody2D>();
         }
 
-        private void OnDestroy()
+
+        protected void OnDestroy()
         {
             ResetLastFiredProjectile();
         }
@@ -51,9 +54,10 @@ namespace SpaceInvaders.Gameplay.Units
 
         public void Kill()
         {
-            DestroyItself();
-
+            IsKilled = true;
             OnKilled?.Invoke(this, EventArgs.Empty);
+
+            DestroyItself();
         }
 
         #endregion
