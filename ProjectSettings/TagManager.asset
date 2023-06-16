@@ -13,10 +13,10 @@ TagManager:
   - 
   - Water
   - UI
-  - MovementConstraining_Constrainer_Spaceship
-  - MovementConstraining_Boundaries_Spaceship
-  - MovementConstraining_Constrainer_InvadersGroup
-  - MovementConstraining_Boundaries_InvadersGroup
+  - MovementConstraining_Spaceship
+  - MovementConstraining_Spaceship_Boundaries
+  - MovementConstraining_InvadersGroup
+  - MovementConstraining_InvadersGroup_Boundaries
   - 
   - 
   - 
@@ -42,4 +42,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 3732094959
+    locked: 0
+  - name: GameplayUnits
+    uniqueID: 3408521169
     locked: 0
