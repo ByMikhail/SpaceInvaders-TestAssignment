@@ -11,6 +11,17 @@ namespace SpaceInvaders.Gameplay.Controllers
 
         private readonly Timer _firingTimer = new();
 
+        protected override void HandleOnMatchHasStarted()
+        {
+            Target.MovementIsEnabled = true;
+            _firingTimer.Restart(_fireRate);
+        }
+
+        protected override void HandleOnMatchHasEnded()
+        {
+            Target.MovementIsEnabled = false;
+        }
+
         protected override void TargetBasedUpdate()
         {
             if (_firingTimer.TimeIsOut)

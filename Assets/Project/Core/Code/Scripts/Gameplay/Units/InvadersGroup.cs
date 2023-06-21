@@ -15,6 +15,8 @@ namespace SpaceInvaders.Gameplay.Units
         [SerializeField] private float _horizontalMovementSpeed = 1f;
         [SerializeField] private float _verticalOffset = 0.5f;
 
+        public bool MovementIsEnabled { get; set; }
+
         private Transform _transform;
         private Rigidbody2D _rigidbody;
         private PointsGrid _spawnPoints;
@@ -30,16 +32,19 @@ namespace SpaceInvaders.Gameplay.Units
             _rigidbody = GetComponent<Rigidbody2D>();
             _spawnPoints = GetComponent<PointsGrid>();
             _invadersBoundsComposer = new RenderersBoundsComposer();
+
+            CreateInvadersOnGrid();
         }
 
         private void Start()
         {
-            CreateInvadersOnGrid();
             UpdateMovementConstrainingCollider();
         }
 
         private void FixedUpdate()
         {
+            if (!MovementIsEnabled) return;
+
             var newPosition = _rigidbody.position + Vector2.right * (_horizontalMovementSpeed * _horizontalMovementDirection * Time.fixedDeltaTime);
             _rigidbody.MovePosition(newPosition);
         }
@@ -101,7 +106,6 @@ namespace SpaceInvaders.Gameplay.Units
 
             return Instantiate(invaderPrefab, position, Quaternion.identity, _transform);
         }
-
 
         private Invader GetRandomInvaderFromBottom()
         {
