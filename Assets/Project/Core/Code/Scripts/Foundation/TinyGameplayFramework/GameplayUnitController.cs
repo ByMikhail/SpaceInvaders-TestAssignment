@@ -13,24 +13,65 @@ namespace SpaceInvaders.Foundation.TinyGameplayFramework
             set => _target = value;
         }
 
-        public bool TargetIsAssigned => _target != null;
+        private bool TargetIsAssigned => _target != null;
+        private bool TargetBasedUpdateHasToBeCalled => TargetIsAssigned && (!CallTargetBasedUpdatedOnlyWhenMatchIsInProgress || _gameMode.Phase == GameModePhase.MatchIsInProgress);
+
+        protected virtual bool CallTargetBasedUpdatedOnlyWhenMatchIsInProgress => true;
+
+        private GameModeBase _gameMode;
+
+        #region Unity lifecycle
+
+        protected void Awake()
+        {
+            _gameMode = ServiceLocator.ServiceLocator.Default.GetService<GameModeBase>();
+
+            _gameMode.OnPhaseChanged += GameMode_OnPhaseChanged;
+
+            if (_gameMode.Phase == GameModePhase.MatchIsInProgress)
+            {
+                HandleOnMatchHasStarted();
+            }
+        }
 
         protected virtual void Update()
         {
-            if (!TargetIsAssigned) return;
-
-            TargetBasedUpdate();
+            if (TargetBasedUpdateHasToBeCalled)
+            {
+                TargetBasedUpdate();
+            }
         }
 
         protected void FixedUpdate()
         {
-            if (!TargetIsAssigned) return;
-
-            TargetBasedFixedUpdate();
+            if (TargetBasedUpdateHasToBeCalled)
+            {
+                TargetBasedFixedUpdate();
+            }
         }
 
-        protected virtual void TargetBasedUpdate() { }
+        #endregion
 
+        #region Event listeners
+
+        protected virtual void HandleOnMatchHasStarted() { }
+        protected virtual void HandleOnMatchHasEnded() { }
+        protected virtual void TargetBasedUpdate() { }
         protected virtual void TargetBasedFixedUpdate() { }
+
+        private void GameMode_OnPhaseChanged(GameModePhase phase)
+        {
+            switch (phase)
+            {
+                case GameModePhase.MatchIsInProgress:
+                    HandleOnMatchHasStarted();
+                    break;
+                case GameModePhase.MatchHasEnded:
+                    HandleOnMatchHasEnded();
+                    break;
+            }
+        }
+
+        #endregion
     }
 }
